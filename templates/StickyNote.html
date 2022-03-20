@@ -1,0 +1,10 @@
+<center>
+    <h1>Welcome to StickyNote<h1>
+    <h2>Here is your sticky note:</h2>
+    <br><br>
+        <form action="{{ url_for("StickyNote")}}" method="POST">
+        <textarea id="text" name="edit_text" rows="4" cols="50">{{ body }}
+        </textarea>
+    <br><br>
+        <input type="submit" name="submit_button" value="Back"><input type="submit" name="submit_button" value="Save"></form>
+<center>
