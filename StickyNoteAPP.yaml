@@ -8,6 +8,8 @@ services:
     environment:
       - MONGO_INITDB_ROOT_USERNAME=root
       - MONGO_INITDB_ROOT_PASSWORD=A123a123
+    volumes:
+      - StickyNoteAPP-Data:/data/db
 
   mongo-express:
     image: mongo-express
@@ -25,3 +27,6 @@ services:
       - 2999:2999
     environment:
       - MONGO_SERVER=stickynote_mongoDB_1
+volumes:
+  StickyNoteAPP-Data:
+    driver: local
