@@ -11,6 +11,13 @@ services:
     volumes:
       - StickyNoteAPP-Data:/data/db
 
+  StickyNoteAPP:
+    image: stickynote_app
+    ports:
+      - 2999:2999
+    environment:
+      - MONGO_SERVER=mongoDB_1
+
   mongo-express:
     image: mongo-express
     ports:
@@ -21,12 +28,6 @@ services:
       - ME_CONFIG_MONGODB_SERVER=mongoDB
     restart: on-failure
 
-  StickyNoteAPP:
-    image: stickynote_app
-    ports:
-      - 2999:2999
-    environment:
-      - MONGO_SERVER=stickynote_mongoDB_1
 volumes:
   StickyNoteAPP-Data:
     driver: local

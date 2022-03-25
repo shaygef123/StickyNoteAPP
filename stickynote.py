@@ -1,21 +1,37 @@
 from flask import Flask, request, render_template, redirect
-from MongoDB import MongoDB
+from MongoDB import MongoDB,MongoACTION
+
+DB_action = MongoACTION("root","A123a123")
+if not DB_action.is_DB_exists("StickyNote_Data"):
+    DB_action.create_new_DB("StickyNote_Data","UsersDataBase")
+else:
+    if not DB_action.is_Collection_exists("StickyNote_Data","UsersDataBase"):
+        DB_action.create_new_DB("StickyNote_Data", "UsersDataBase")
 
 app = Flask(__name__)
 mongo = MongoDB("root","A123a123","StickyNote_Data","UsersDataBase")
 
+@app.route('/DB_status')
+def status():
+    return f"<center><h1>DataBase: {DB_action.is_DB_exists('StickyNote_Data')}\nCollection: {DB_action.is_Collection_exists('StickyNote_Data','UsersDataBase')}</h1></center>"
 
 @app.route('/home', methods=["GET","POST"])
 def home():
     if request.method == "POST":
         if request.form['submit_button'] == "login":
-            login = mongo.login_check(request.form["username"],request.form["ID"],request.form["password"])
+            global ID
+            try:
+                ID = int(request.form["ID"])
+            except ValueError:
+                return "ID must be number!"
+            login = mongo.login_check(request.form["username"],ID,request.form["password"])
+            print("login is:\n",login) # for test!!!
             if login :
-                global ID
-                ID = request.form["ID"]
                 return redirect('/Mynote')
+            elif login == None:
+                return "Username does not exists"
             else:
-                return "There is no username or your identification details is incorrect"
+                return "Authentication failed"
 
         elif request.form['submit_button'] == "Create new member":
             return redirect('/create')
@@ -30,8 +46,12 @@ def create_user():
 
         elif request.form['submit_button'] == "Create":
             try:
-                is_created = mongo.create_new_user(request.form["new_username"],request.form["ID"],request.form["new_password"])
-                if is_created == "True":
+                ID = int(request.form["ID"])
+            except ValueError:
+                return "ID must be number!"
+            try:
+                is_created = mongo.create_new_user(request.form["new_username"],ID,request.form["new_password"])
+                if is_created:
                     return "The user created successfuly"
                 else:
                     return is_created
