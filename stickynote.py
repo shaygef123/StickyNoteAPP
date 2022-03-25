@@ -1,7 +1,7 @@
 from flask import Flask, request, render_template, redirect
 from MongoDB import MongoDB,MongoACTION
 
-DB_action = MongoACTION("root","A123a123")
+DB_action = MongoACTION("root","A123a123",)
 if not DB_action.is_DB_exists("StickyNote_Data"):
     DB_action.create_new_DB("StickyNote_Data","UsersDataBase")
 else:

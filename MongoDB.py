@@ -80,8 +80,8 @@ class MongoDB:
             return "There is no user exists"
 
 class MongoACTION:
-    def __init__(self,DB_username,DB_password,MONGO_SERVER="localhost"):
-        self.client = pymongo.MongoClient(f"mongodb://{DB_username}:{DB_password}@{MONGO_SERVER}:27017/")
+    def __init__(self,DB_username,DB_password,mongo_server=MONGO_SERVER):
+        self.client = pymongo.MongoClient(f"mongodb://{DB_username}:{DB_password}@{mongo_server}:27017/")
 
     def is_DB_exists(self,DB_name):
         DB_List = self.client.list_database_names()
