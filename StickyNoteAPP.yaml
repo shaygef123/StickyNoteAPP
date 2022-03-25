@@ -16,7 +16,7 @@ services:
     ports:
       - 2999:2999
     environment:
-      - MONGO_SERVER=mongoDB_1
+      - MONGO_SERVER=mongoDB
 
   mongo-express:
     image: mongo-express
