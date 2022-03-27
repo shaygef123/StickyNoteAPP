@@ -2,9 +2,9 @@ import pymongo
 import os
 MONGO_SERVER = os.getenv("MONGO_SERVER")
 
-# if MONGO_SERVER == None:
-#     MONGO_SERVER = "localhost"
-# print(MONGO_SERVER)
+if MONGO_SERVER == None:
+    MONGO_SERVER = "localhost"
+print(MONGO_SERVER)
 
 class MongoDB:
     def __init__(self,DB_username,DB_password,DB_name,DB_collection):
